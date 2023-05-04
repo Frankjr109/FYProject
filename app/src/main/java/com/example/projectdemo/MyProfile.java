@@ -3,6 +3,7 @@ package com.example.projectdemo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -32,9 +33,9 @@ public class MyProfile extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
         //Initialising the variables from the layouts
-        name = findViewById(R.id.viewTextFullName12);
-        number = findViewById(R.id.viewTextNumber12);
-        email = findViewById(R.id.viewTextEmail12);
+        name = findViewById(R.id.realName_textview);
+        number = findViewById(R.id.phone_textview);
+        email = findViewById(R.id.email_textview);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users").child(userID);
@@ -46,7 +47,8 @@ public class MyProfile extends AppCompatActivity {
 
                  */
                 User user1 = snapshot.getValue(User.class);
-                name.setText(user1.getFullName());
+                name.setTextColor(Color.BLACK);
+                name.setText("Great to see you join foodagram " + user1.getFullName());
                 number.setText(user1.getNumber());
                 email.setText(user1.getEmail());
             }

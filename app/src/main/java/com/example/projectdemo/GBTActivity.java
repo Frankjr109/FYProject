@@ -12,23 +12,33 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class GBTActivity extends AppCompatActivity {
+
+    private RequestQueue mQueue;
 
     RecyclerView recyclerView;
     TextView welcomeTextView;
@@ -48,6 +58,8 @@ public class GBTActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gbtactivity);
+
+        mQueue = Volley.newRequestQueue(this);
 
         messageList = new ArrayList<>();
 
@@ -98,7 +110,7 @@ public class GBTActivity extends AppCompatActivity {
         addToChat(response,Message.SENT_BY_BOT);
     }
 
-    void callAPI(String question){
+    /*void callAPI(String question){
         //okhttp set up
         messageList.add(new Message("Typing.....",Message.SENT_BY_BOT));
 
@@ -116,7 +128,7 @@ public class GBTActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/completions")
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer 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")
                 .post(body)
                 .build();
 
@@ -145,7 +157,62 @@ public class GBTActivity extends AppCompatActivity {
             }
         });
 
+    }*/
+
+
+    void callAPI(String question) {
+        messageList.add(new Message("Typing.....",Message.SENT_BY_BOT));
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("model", "text-davinci-003");
+            jsonBody.put("prompt",question);
+            jsonBody.put("max_tokens",4000);
+            jsonBody.put("temperature", 0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String url = "https://api.openai.com/v1/completions";
+
+        //Create JSON object request with the neccessary parameters
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //When the onResponse is received, the onResponse call back is called we extract the neccessary information from the response.
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("choices");
+                            String result = jsonArray.getJSONObject(0).getString("text");
+                            addResponse(result.trim());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        addResponse("Failed to load response due to " + error.getMessage());
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer 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");
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(GBTActivity.this);
+        requestQueue.add(jsonObjectRequest);
+
+
     }
+
 
 
 }

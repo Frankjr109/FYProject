@@ -2,6 +2,8 @@ package com.example.projectdemo;
 
 import android.widget.ProgressBar;
 
+import com.google.firebase.firestore.CollectionReference;
+
 public class FoodItem {
     private String foodName;
     private String foodCategory;
@@ -53,6 +55,7 @@ public class FoodItem {
     public void setFoodExpiryDate(String foodExpiryDate) {
         this.foodExpiryDate = foodExpiryDate;
     }
+
 
 
 }

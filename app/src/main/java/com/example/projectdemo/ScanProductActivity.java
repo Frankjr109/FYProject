@@ -63,6 +63,8 @@ public class ScanProductActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
 
+     ActionBar actionBar;
+
     //creating progress dialog
     ProgressDialog pd;
 
@@ -85,9 +87,14 @@ public class ScanProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_product);
 
+        actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("Add Data");
+        }
         //actionbar and its title
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Add Data");
+        //ActionBar actionBar = getSupportActionBar();
+        //assert actionBar != null;
+        //actionBar.setTitle("Add Data");
 
         //progress dialog
         pd = new ProgressDialog(this);

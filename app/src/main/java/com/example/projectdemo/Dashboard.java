@@ -78,12 +78,12 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        myProfile2Card = findViewById(R.id.myProfile2);
+        myProfile2Card = findViewById(R.id.myProfile2); //Then change it back to what it was supposed to be
         myProfile2Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Dashboard.this, "Welcome to your Profile!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Dashboard.this, MySecondProfile.class);
+                Intent intent = new Intent(Dashboard.this, RecipeRecommendation.class);
                 startActivity(intent);
             }
         });

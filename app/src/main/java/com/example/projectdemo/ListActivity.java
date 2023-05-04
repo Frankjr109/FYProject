@@ -33,6 +33,8 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
+    ActionBar actionBar;
+
     List<FoodItem2> foodItem2List = new ArrayList<>();
     RecyclerView mRecyclerView;
 
@@ -56,8 +58,13 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         //actionbar and its title
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("List Data");
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setTitle("List Data");
+
+        actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("List Data");
+        }
 
         //init firestore
         db = FirebaseFirestore.getInstance();

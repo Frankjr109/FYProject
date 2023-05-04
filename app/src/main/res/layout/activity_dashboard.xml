@@ -241,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:textColor="#000"
-                        android:text="Bar Code scanner"/>
+                        android:text="Add to cupboard"/>
 
 
 
@@ -314,7 +314,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:src="@drawable/ic_baseline_notes_24"
+                        android:src="@drawable/ic_baseline_lightbulb_24"
                         android:layout_width="80dp"
                         android:layout_height="80dp"/>
 
@@ -323,7 +323,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:textColor="#000"
-                        android:text="MY PROFILE 2"/>
+                        android:text="Recipe"/>
 
 
 
@@ -368,16 +368,12 @@
 
 
 
-
-
                 </LinearLayout>
 
 
             </androidx.cardview.widget.CardView>
 
         </GridLayout>
-
-
 
 
 
