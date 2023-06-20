@@ -132,7 +132,7 @@
 
             <androidx.cardview.widget.CardView
 
-                android:id="@+id/myChatGBT"
+                android:id="@+id/myDonations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -150,7 +150,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:src="@drawable/ic_baseline_chat_24"
+                        android:src="@drawable/ic_baseline_favorite_24"
                         android:layout_width="80dp"
                         android:layout_height="80dp"/>
 
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:textColor="#000"
-                        android:text="My Chat GBT"/>
+                        android:text="My Donations"/>
 
 
 

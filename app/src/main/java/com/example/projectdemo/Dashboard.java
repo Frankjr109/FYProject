@@ -19,6 +19,7 @@ public class Dashboard extends AppCompatActivity {
     private CardView barCodeScannerCard;
     private CardView myProfile2Card;
     private CardView myChatGBTCard;
+    private CardView myDonationsCard;
     private CardView myPersonalChatCard;
 
     @Override
@@ -88,21 +89,23 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        myChatGBTCard = findViewById(R.id.myChatGBT);
-        myChatGBTCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Dashboard.this, "Welcome to your ChatGBT!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Dashboard.this, GBTActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         myPersonalChatCard = findViewById(R.id.myPersonalChat);
         myPersonalChatCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Dashboard.this, "Welcome to your Personal Chats!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Dashboard.this, MyChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myDonationsCard = findViewById(R.id.myDonations);
+        myDonationsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dashboard.this, "Welcome to your Donations Page!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Dashboard.this, MyChatActivity.class);
                 startActivity(intent);
             }
