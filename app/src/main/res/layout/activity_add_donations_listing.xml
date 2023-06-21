@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddDonationsListing">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donations List"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="32dp"/>
+
+    <EditText
+        android:id="@+id/donationsDescription"
+        android:padding="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/donationsLocation"
+        android:padding="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"/>
+
+
+
+
+</LinearLayout>

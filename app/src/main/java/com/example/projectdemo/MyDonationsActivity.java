@@ -1,5 +1,6 @@
 package com.example.projectdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.projectdemo.ui.main.SectionsPagerAdapter;
 import com.example.projectdemo.databinding.ActivityMyDonationsBinding;
@@ -19,6 +21,7 @@ import com.example.projectdemo.databinding.ActivityMyDonationsBinding;
 public class MyDonationsActivity extends AppCompatActivity {
 
     private ActivityMyDonationsBinding binding;
+    private FloatingActionButton addDonationsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +35,13 @@ public class MyDonationsActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
+        FloatingActionButton fab = binding.addDonationsBtn;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MyDonationsActivity.this, AddDonationsListing.class);
+                startActivity(intent);
             }
         });
     }
