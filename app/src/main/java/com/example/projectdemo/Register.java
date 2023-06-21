@@ -113,7 +113,7 @@ public class Register extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         //User user = new User(userID, fullName, number, email);
 
-                        sendEmailVerification();
+                        //sendEmailVerification();
 
                         if (task.isSuccessful()) {
                             userID = mAuth.getCurrentUser().getUid();
@@ -130,7 +130,10 @@ public class Register extends AppCompatActivity {
                             documentReference.set(userObject).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(Register.this, "Successful!", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(Register.this, "Successful!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Register.this, "User signed in successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Register.this, Dashboard.class);
+                                    startActivity(intent);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

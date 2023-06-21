@@ -45,6 +45,12 @@ public class Login extends AppCompatActivity {
 
         login_Btn = findViewById(R.id.loginBtn);
 
+        if(mAuth.getCurrentUser() != null){
+            Toast.makeText(Login.this, "User Signed in!!!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Login.this, Dashboard.class);
+            startActivity(intent);
+        }
+
         registerNowBtn = findViewById(R.id.registerRedirectText);
         registerNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +92,12 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
 
-                                if(mAuth.getCurrentUser().isEmailVerified()){
+                                /*if(mAuth.getCurrentUser().isEmailVerified()){
                                     startActivity(new Intent(Login.this, Dashboard.class));
                                     finish();
                                 }else{
                                     Toast.makeText(Login.this, "Please verify your email ID", Toast.LENGTH_SHORT).show();
-                                }
+                                }*/
 
                                 Toast.makeText(Login.this, "User signed in successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, Dashboard.class);

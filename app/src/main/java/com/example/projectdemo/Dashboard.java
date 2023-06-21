@@ -106,7 +106,7 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Dashboard.this, "Welcome to your Donations Page!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Dashboard.this, MyChatActivity.class);
+                Intent intent = new Intent(Dashboard.this, MyDonationsActivity.class);
                 startActivity(intent);
             }
         });
