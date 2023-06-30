@@ -35,7 +35,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        if(position == 0){
+            return "Listings";
+        }else{
+            return "Map";
+        }
+       // return mContext.getResources().getString(TAB_TITLES[position]);
     }
 
     @Override

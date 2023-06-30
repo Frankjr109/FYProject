@@ -33,6 +33,10 @@ public class Utility {
                 .document(currentUser.getUid()).collection("my_foods");
     }
 
+    static CollectionReference getDonationsCollection(){
+        return FirebaseFirestore.getInstance().collection("donations");
+    }
+
     static String timestampToString(Timestamp timestamp){
         return new SimpleDateFormat("MM/dd/yyyy").format(timestamp.toDate());
     }

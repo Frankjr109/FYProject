@@ -9,8 +9,3 @@ plugins {
 
 }
 
-allprojects {
-    repositories {
-        google()
-    }
-}

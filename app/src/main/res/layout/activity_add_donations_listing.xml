@@ -16,6 +16,15 @@
         android:textSize="32dp"/>
 
     <EditText
+        android:id="@+id/donationsTitle"
+        android:padding="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"/>
+
+    <EditText
         android:id="@+id/donationsDescription"
         android:padding="25dp"
         android:layout_width="match_parent"
@@ -33,6 +42,20 @@
         android:textColorHint="@color/black"
         android:textSize="20dp"/>
 
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+
+    <Button
+        android:id="@+id/addDonationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:text="Add Listing" />
 
 
 

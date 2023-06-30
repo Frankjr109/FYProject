@@ -11,9 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectdemo.Adapter.DonationsListAdapter;
+import com.example.projectdemo.DonationListing;
+import com.example.projectdemo.MessageAdapter;
 import com.example.projectdemo.R;
+import com.example.projectdemo.Utility;
 import com.example.projectdemo.databinding.FragmentMyDonationsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -24,6 +37,8 @@ public class PlaceholderFragment extends Fragment {
 
     private PageViewModel pageViewModel;
     private FragmentMyDonationsBinding binding;
+    private ArrayList<DonationListing> listings;
+    RecyclerView listingsRecyclerView;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -42,6 +57,7 @@ public class PlaceholderFragment extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        listings = new ArrayList<>();
     }
 
     @Override
@@ -52,15 +68,70 @@ public class PlaceholderFragment extends Fragment {
         binding = FragmentMyDonationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.sectionLabel;
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        int index = getArguments().getInt(ARG_SECTION_NUMBER);
+
+        // Inflate different layouts based on the index value
+        switch (index) {
+            case 1:
+                // First tab layout
+                root = inflater.inflate(R.layout.activity_main_donations, container, false);
+                break;
+            case 2:
+                // Second tab layout
+                root = inflater.inflate(R.layout.donations_map_view, container, false);
+
+                break;
+            // Add more cases for additional tabs if needed
+            default:
+                break;
+        }
+
+
+        if(index == 1){
+            listingsRecyclerView = root.findViewById(R.id.recycler_view_donations);
+            getDonationsFromFirestore();
+
+
+
+        }
+
+        if(index == 2){
+
+        }
+
+
         return root;
     }
+
+    void getDonationsFromFirestore(){
+        CollectionReference donationsRef =  FirebaseFirestore.getInstance().collection("donations");
+
+        donationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot snapshot: queryDocumentSnapshots){
+                    String title = snapshot.getData().get("title").toString();
+                    String desc = snapshot.getData().get("description").toString();
+                    String location = snapshot.getData().get("location").toString();
+                    String user = snapshot.getData().get("user").toString();
+                    String userID = snapshot.getData().get("userID").toString();
+
+                    DonationListing listing = new DonationListing(title,desc, location, user, userID);
+                    listings.add(listing);
+                }
+
+
+                //set up recycler view
+                DonationsListAdapter adapter = new DonationsListAdapter(getActivity(), listings);
+                listingsRecyclerView.setAdapter(adapter);
+                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                llm.setStackFromEnd(true);
+                listingsRecyclerView.setLayoutManager(llm);
+
+            }
+        });
+    }
+
 
     @Override
     public void onDestroyView() {
