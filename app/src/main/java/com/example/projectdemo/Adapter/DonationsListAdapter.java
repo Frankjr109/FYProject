@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.projectdemo.DonationListing;
+import com.example.projectdemo.DonationListingActivity;
 import com.example.projectdemo.MessageActivity;
 import com.example.projectdemo.Model.Chat;
 import com.example.projectdemo.R;
@@ -26,8 +28,6 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
 
     private Context mContext;
     private List<DonationListing> donationListings;
-
-    FirebaseUser fuser;
 
     public DonationsListAdapter(Context mContext, List<DonationListing> listings){
         this.mContext = mContext;
@@ -47,6 +47,13 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
 
         holder.listingTitle.setText(listing.getTitle());
         holder.listingDescription.setText(listing.getDescription());
+        holder.itemCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, DonationListingActivity.class);
+                mContext.startActivity(i);
+            }
+        });
 
     }
 
@@ -56,13 +63,15 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView listingTitle, listingDescription;;
+        public TextView listingTitle, listingDescription;
+        public LinearLayout itemCard;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             listingTitle = itemView.findViewById(R.id.listing_title);
             listingDescription = itemView.findViewById(R.id.listing_description);
+            itemCard = itemView.findViewById(R.id.itemCard);
         }
     }
 }

@@ -51,7 +51,8 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
     private MapView mapView;
     private Marker selectedMarker;
     private LocationManager locationManager;
-    private EditText titleEditText, descriptionEditText, locationET;
+    private EditText titleEditText, descriptionEditText;
+    private TextView locationText;
     private Button addDonationsBtn;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -63,7 +64,7 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
 
         titleEditText = findViewById(R.id.donationsTitle);
         descriptionEditText = findViewById(R.id.donationsDescription);
-        locationET = findViewById(R.id.donationsLocation);
+        locationText = findViewById(R.id.donationsLocation);
         addDonationsBtn = findViewById(R.id.addDonationButton);
 
 
@@ -77,10 +78,25 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
             public void onClick(View v) {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                if(titleEditText.getText().toString().isEmpty()){
+                    Utility.showToast(AddDonationsListing.this, "Please add a title!");
+                    return;
+                }
+
+                if(descriptionEditText.getText().toString().isEmpty()){
+                    Utility.showToast(AddDonationsListing.this, "Please add a description!");
+                    return;
+                }
+
+                if(locationText.getText().toString().isEmpty()){
+                    Utility.showToast(AddDonationsListing.this, "Please tap on the map to select a pickup point location!");
+                    return;
+                }
+
                 Map<String, Object> donationListing = new HashMap<>();
                 donationListing.put("title", titleEditText.getText().toString());
                 donationListing.put("description", descriptionEditText.getText().toString());
-                donationListing.put("location", locationET.getText().toString());
+                donationListing.put("location", locationText.getText().toString());
                 assert currentUser != null;
                 donationListing.put("user", Objects.equals(currentUser.getDisplayName(), "") ? "Unknown User": currentUser.getDisplayName());
                 donationListing.put("userID", currentUser.getUid());
@@ -153,7 +169,7 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
 
                 Toast.makeText(getApplicationContext(), selectedMarker.getPosition().toString(),Toast.LENGTH_LONG).show();
 
-                locationET.setText(String.format("%s,%s", selectedMarker.getPosition().latitude, selectedMarker.getPosition().longitude));
+                locationText.setText(String.format("%s,%s", selectedMarker.getPosition().latitude, selectedMarker.getPosition().longitude));
             }
         });
     }

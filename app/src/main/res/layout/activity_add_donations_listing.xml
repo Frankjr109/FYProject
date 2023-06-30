@@ -33,12 +33,11 @@
         android:textColorHint="@color/black"
         android:textSize="20dp"/>
 
-    <EditText
-        android:id="@+id/donationsLocation"
+    <TextView
         android:padding="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Location"
+        android:text="Tap on the map to select pickup point location:"
         android:textColorHint="@color/black"
         android:textSize="20dp"/>
 
@@ -48,12 +47,21 @@
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
+    <TextView
+        android:id="@+id/donationsLocation"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/black"
+        android:textAlignment="center"
+        android:textSize="10dp"/>
 
     <Button
         android:id="@+id/addDonationButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:padding="10dp"
         android:text="Add Listing" />
 

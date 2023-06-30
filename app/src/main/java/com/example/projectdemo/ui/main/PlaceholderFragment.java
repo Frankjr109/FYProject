@@ -1,5 +1,6 @@
 package com.example.projectdemo.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectdemo.Adapter.DonationsListAdapter;
 import com.example.projectdemo.DonationListing;
+import com.example.projectdemo.DonationListingActivity;
 import com.example.projectdemo.MessageAdapter;
 import com.example.projectdemo.R;
 import com.example.projectdemo.Utility;
 import com.example.projectdemo.databinding.FragmentMyDonationsBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -96,6 +105,27 @@ public class PlaceholderFragment extends Fragment {
         }
 
         if(index == 2){
+            MapView mapView = root.findViewById(R.id.listingMapView);
+            mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(@NonNull GoogleMap map) {
+
+                    GoogleMap googleMap = map;
+                    mapView.onResume();
+                    // Set initial map position and zoom level
+                    LatLng initialLatLng = new LatLng(53.3498, -6.2603); //Dublin coordinates
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLatLng, 10));
+
+                    // Enable zoom gestures
+                    googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+                    // Enable scroll gestures (map dragging)
+                    googleMap.getUiSettings().setScrollGesturesEnabled(true);
+
+                    getDonationsFromFirestore(googleMap);
+                }
+            });
 
         }
 
@@ -132,6 +162,57 @@ public class PlaceholderFragment extends Fragment {
         });
     }
 
+    // method overloading
+    void getDonationsFromFirestore(GoogleMap map){
+        CollectionReference donationsRef =  FirebaseFirestore.getInstance().collection("donations");
+
+        donationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot snapshot: queryDocumentSnapshots){
+                    String title = snapshot.getData().get("title").toString();
+                    String desc = snapshot.getData().get("description").toString();
+                    String location = snapshot.getData().get("location").toString();
+                    String user = snapshot.getData().get("user").toString();
+                    String userID = snapshot.getData().get("userID").toString();
+
+                    DonationListing listing = new DonationListing(title,desc, location, user, userID);
+                    listings.add(listing);
+                }
+
+
+                //set up map markers
+               // "2432,234" = ["2432","234"]
+                for(DonationListing listing: listings){
+                    LatLng listingLoc = new LatLng(
+                            Float.parseFloat(listing.getLocation().split(",")[0]),
+                            Float.parseFloat(listing.getLocation().split(",")[1]));
+
+                    map.addMarker(new MarkerOptions()
+                            .position(listingLoc)
+                            .title(listing.getTitle())
+                            .snippet(listing.getDescription()));
+
+                }
+
+               map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                   @Override
+                   public boolean onMarkerClick(@NonNull Marker marker) {
+                       for(DonationListing listing: listings){
+                           if(listing.getTitle().equals(marker.getTitle())){
+                               Intent i = new Intent(getActivity(), DonationListingActivity.class);
+                               startActivity(i);
+                               break;
+                           }
+                       }
+
+                       return false;
+                   }
+               });
+
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {
