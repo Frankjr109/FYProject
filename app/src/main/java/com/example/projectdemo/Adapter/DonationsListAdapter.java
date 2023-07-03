@@ -51,6 +51,10 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, DonationListingActivity.class);
+                i.putExtra("title",listing.getTitle());
+                i.putExtra("id",listing.getId());
+                i.putExtra("description",listing.getDescription());
+                i.putExtra("location",listing.getLocation());
                 mContext.startActivity(i);
             }
         });

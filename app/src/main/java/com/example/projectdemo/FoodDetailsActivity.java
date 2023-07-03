@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectdemo.Notifications.NotificationScheduler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,6 +65,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
     String originalProgressBar;
 
     boolean isEditMode = false;
+    long mil = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,14 @@ public class FoodDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
+                        final Calendar calendar = Calendar.getInstance();
+                        final Calendar currentTime = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
+                        mil = calendar.getTimeInMillis();
+
                         textExpiryDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 }, year, month, day);
@@ -205,6 +215,10 @@ public class FoodDetailsActivity extends AppCompatActivity {
         foodItem.setFoodCategory(foodCategory);
         foodItem.setFoodQuantity(foodQuantity);
         foodItem.setFoodExpiryDate(foodExpiryDate);
+
+        NotificationScheduler.scheduleNotification(FoodDetailsActivity.this,
+                foodItem.getFoodName(), "Your item is going to expire in 2 days! Donate it or use it in our suggested recipes!",
+                mil);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(FoodDetailsActivity.this, "My notification");
         builder.setContentTitle("My title");

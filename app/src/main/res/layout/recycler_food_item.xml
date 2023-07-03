@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/food_item_bg"
-    android:padding="4sp"
-    android:layout_margin="4sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E6DBDB"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
     android:orientation="vertical"
     android:layout_height="wrap_content">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="#E2EAF1"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/textName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
         android:text="Food name"/>
@@ -20,7 +27,7 @@
         android:id="@+id/textCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
         android:text="Category"/>
@@ -29,7 +36,7 @@
         android:id="@+id/textQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="italic"
         android:textSize="18sp"
         android:text="Quantity"/>
@@ -38,7 +45,7 @@
         android:id="@+id/textExpiryDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
         android:text="Expiry Date"/>
@@ -71,5 +78,6 @@
 
 
     </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

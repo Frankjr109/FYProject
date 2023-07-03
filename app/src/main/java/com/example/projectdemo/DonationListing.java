@@ -2,7 +2,7 @@ package com.example.projectdemo;
 
 public class DonationListing {
 
-    private String title, description, location, user, userID;
+    private String title, description, location, user, userID, id;
 
     public DonationListing() {}
 
@@ -12,6 +12,24 @@ public class DonationListing {
         this.location = location;
         this.user = user;
         this.userID = userID;
+
+    }
+
+    public DonationListing(String title, String description, String location, String user, String userID, String id) {
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.user = user;
+        this.userID = userID;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

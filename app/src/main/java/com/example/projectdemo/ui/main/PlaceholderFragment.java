@@ -48,6 +48,8 @@ public class PlaceholderFragment extends Fragment {
     private FragmentMyDonationsBinding binding;
     private ArrayList<DonationListing> listings;
     RecyclerView listingsRecyclerView;
+    MapView mapView;
+    int index = -1;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -77,7 +79,7 @@ public class PlaceholderFragment extends Fragment {
         binding = FragmentMyDonationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        int index = getArguments().getInt(ARG_SECTION_NUMBER);
+        index = getArguments().getInt(ARG_SECTION_NUMBER);
 
         // Inflate different layouts based on the index value
         switch (index) {
@@ -95,18 +97,31 @@ public class PlaceholderFragment extends Fragment {
                 break;
         }
 
-
         if(index == 1){
             listingsRecyclerView = root.findViewById(R.id.recycler_view_donations);
             getDonationsFromFirestore();
 
+        }
 
+        if(index == 2){
+            mapView = root.findViewById(R.id.listingMapView);
+            mapView.onCreate(savedInstanceState);
+        }
+
+      updateViews();
+
+
+        return root;
+    }
+
+    void updateViews(){
+        if(index == 1){
+            getDonationsFromFirestore();
 
         }
 
         if(index == 2){
-            MapView mapView = root.findViewById(R.id.listingMapView);
-            mapView.onCreate(savedInstanceState);
+
             mapView.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(@NonNull GoogleMap map) {
@@ -128,9 +143,6 @@ public class PlaceholderFragment extends Fragment {
             });
 
         }
-
-
-        return root;
     }
 
     void getDonationsFromFirestore(){
@@ -139,6 +151,7 @@ public class PlaceholderFragment extends Fragment {
         donationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                listings.clear();
                 for(DocumentSnapshot snapshot: queryDocumentSnapshots){
                     String title = snapshot.getData().get("title").toString();
                     String desc = snapshot.getData().get("description").toString();
@@ -146,7 +159,7 @@ public class PlaceholderFragment extends Fragment {
                     String user = snapshot.getData().get("user").toString();
                     String userID = snapshot.getData().get("userID").toString();
 
-                    DonationListing listing = new DonationListing(title,desc, location, user, userID);
+                    DonationListing listing = new DonationListing(title,desc, location, user, userID, snapshot.getId());
                     listings.add(listing);
                 }
 
@@ -169,6 +182,7 @@ public class PlaceholderFragment extends Fragment {
         donationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                listings.clear();
                 for(DocumentSnapshot snapshot: queryDocumentSnapshots){
                     String title = snapshot.getData().get("title").toString();
                     String desc = snapshot.getData().get("description").toString();
@@ -176,7 +190,7 @@ public class PlaceholderFragment extends Fragment {
                     String user = snapshot.getData().get("user").toString();
                     String userID = snapshot.getData().get("userID").toString();
 
-                    DonationListing listing = new DonationListing(title,desc, location, user, userID);
+                    DonationListing listing = new DonationListing(title,desc, location, user, userID, snapshot.getId());
                     listings.add(listing);
                 }
 
@@ -201,6 +215,12 @@ public class PlaceholderFragment extends Fragment {
                        for(DonationListing listing: listings){
                            if(listing.getTitle().equals(marker.getTitle())){
                                Intent i = new Intent(getActivity(), DonationListingActivity.class);
+
+                               i.putExtra("title",listing.getTitle());
+                               i.putExtra("id",listing.getId());
+                               i.putExtra("description",listing.getDescription());
+                               i.putExtra("location",listing.getLocation());
+
                                startActivity(i);
                                break;
                            }
@@ -212,6 +232,12 @@ public class PlaceholderFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateViews();
     }
 
     @Override
