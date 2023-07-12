@@ -47,6 +47,7 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
 
         holder.listingTitle.setText(listing.getTitle());
         holder.listingDescription.setText(listing.getDescription());
+        holder.listingUser.setText(String.format("%s is donating:", listing.getUser()));
         holder.itemCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,12 +68,13 @@ public class DonationsListAdapter extends RecyclerView.Adapter<DonationsListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView listingTitle, listingDescription;
+        public TextView listingTitle, listingDescription, listingUser;
         public LinearLayout itemCard;
 
         public ViewHolder(View itemView){
             super(itemView);
 
+            listingUser = itemView.findViewById(R.id.listing_user);
             listingTitle = itemView.findViewById(R.id.listing_title);
             listingDescription = itemView.findViewById(R.id.listing_description);
             itemCard = itemView.findViewById(R.id.itemCard);

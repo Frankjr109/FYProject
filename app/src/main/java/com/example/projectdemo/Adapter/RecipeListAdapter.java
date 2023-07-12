@@ -73,7 +73,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
             public void onClick(View v) {
                 RequestQueue requestQueue = Volley.newRequestQueue(mContext);
 
-                String url = "https://api.spoonacular.com/recipes/"+recipe.getId()+"/information?apiKey=";
+                String url = "https://api.spoonacular.com/recipes/"+recipe.getId()+"/information?apiKey=569da0ccd549421d9668bc9d5385791b";
 
                 // Create a GET request
                 StringRequest request = new StringRequest(Request.Method.GET, url,

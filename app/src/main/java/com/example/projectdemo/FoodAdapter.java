@@ -61,7 +61,7 @@ public class FoodAdapter extends FirestoreRecyclerAdapter<FoodItem, FoodAdapter.
 
         if(daysUntilExpiry <= 0){
             holder.daysTillExpiredTextView.setTextColor(Color.RED);
-            holder.daysTillExpiredTextView.setText(daysUntilExpiry + " days left until expiry, Item has expired");
+            holder.daysTillExpiredTextView.setText("Item has expired");
         }else{
             holder.daysTillExpiredTextView.setText(daysUntilExpiry + " days left until expiry");
         }

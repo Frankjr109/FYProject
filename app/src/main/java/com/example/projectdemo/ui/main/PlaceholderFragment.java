@@ -168,7 +168,6 @@ public class PlaceholderFragment extends Fragment {
                 DonationsListAdapter adapter = new DonationsListAdapter(getActivity(), listings);
                 listingsRecyclerView.setAdapter(adapter);
                 LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-                llm.setStackFromEnd(true);
                 listingsRecyclerView.setLayoutManager(llm);
 
             }

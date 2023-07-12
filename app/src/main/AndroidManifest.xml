@@ -50,6 +50,9 @@
                 android:value="" />
         </activity>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCkdkKC8OE2P8Od78I0ovVoS_S2wApaYUQ" />
 
         <activity
             android:name=".AddDonationsListing"

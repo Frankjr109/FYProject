@@ -46,7 +46,7 @@ public class RecipeActivity extends AppCompatActivity {
     void getRecipesList(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        String url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=&ingredients="+searchQuery;
+        String url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=569da0ccd549421d9668bc9d5385791b&ingredients="+searchQuery;
 
         // Create a GET request
         StringRequest request = new StringRequest(Request.Method.GET, url,

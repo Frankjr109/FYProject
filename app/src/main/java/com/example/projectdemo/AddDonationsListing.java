@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,6 +25,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projectdemo.ui.main.PlaceholderFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -38,6 +41,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
@@ -97,18 +105,34 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
                 donationListing.put("title", titleEditText.getText().toString());
                 donationListing.put("description", descriptionEditText.getText().toString());
                 donationListing.put("location", locationText.getText().toString());
-                assert currentUser != null;
-                donationListing.put("user", Objects.equals(currentUser.getDisplayName(), "") ? "Unknown User": currentUser.getDisplayName());
                 donationListing.put("userID", currentUser.getUid());
 
-
-                Utility.getDonationsCollection().add(donationListing).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Users").child(currentUser.getUid());
+                reference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Utility.showToast(AddDonationsListing.this, "Listing added!");
-                        finish();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user1 = snapshot.getValue(User.class);
+                        donationListing.put("user", Objects.equals( user1.getFullName(), "") ? "Unknown User":  user1.getFullName());
+
+                        Utility.getDonationsCollection().add(donationListing).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Utility.showToast(AddDonationsListing.this, "Listing added!");
+                                finish();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Utility.showToast(AddDonationsListing.this,"Error adding the listing!");
                     }
                 });
+
+
+
             }
         });
     }
@@ -197,7 +221,8 @@ public class AddDonationsListing extends AppCompatActivity implements OnMapReady
                             .position(currentLatLng)
                             .title("Current Location"));
 
-                    // TODO: Handle selected location
+                    locationText.setText(String.format("%s,%s", selectedMarker.getPosition().latitude, selectedMarker.getPosition().longitude));
+
                 }
             }
         }
