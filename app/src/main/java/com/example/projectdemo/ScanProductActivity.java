@@ -212,7 +212,7 @@ public class ScanProductActivity extends AppCompatActivity {
         mListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ScanProductActivity.this, ListActivity.class));
+                startActivity(new Intent(ScanProductActivity.this, AddFoodToFridge.class));
                 finish();
             }
         });
@@ -310,13 +310,14 @@ public class ScanProductActivity extends AppCompatActivity {
         String id = UUID.randomUUID().toString();
 
         Map<String, Object> food = new HashMap<>();
-        food.put("id", id);
+        //food.put("id", id);
         food.put("foodName", foodName);
-        food.put("search", foodName.toLowerCase());
-        food.put("knownAs", knownAs);
-        food.put("brand", brand);
-        food.put("category", category);
-        food.put("expiryDate", expiryDate);
+        //food.put("search", foodName.toLowerCase());
+        //food.put("knownAs", knownAs);
+        //food.put("brand", brand);
+        food.put("foodCategory", category);
+        food.put("foodExpiryDate", expiryDate);
+        food.put("foodQuantity", "1");
 
 
 
@@ -334,7 +335,7 @@ public class ScanProductActivity extends AppCompatActivity {
 
 
         //add this data
-        db.collection("mainFoods").document(firebaseUser.getUid()).collection("myMain_foods").document(id).set(food)
+        db.collection("foods").document(firebaseUser.getUid()).collection("my_foods").document(id).set(food)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectdemo.Notifications.NotificationScheduler;
+import com.example.projectdemo.recipes.RecipeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,11 +89,15 @@ public class FoodDetailsActivity extends AppCompatActivity {
             }
         });
 
+
         textName = findViewById(R.id.textName);
         textQuantity = findViewById(R.id.textQuantity);
         textExpiryDate = findViewById(R.id.textExpiryDate);
 
         pageTitleTextView = findViewById(R.id.page_title);
+
+
+
 
 
         //receive data
@@ -196,7 +201,18 @@ public class FoodDetailsActivity extends AppCompatActivity {
         deleteFoodTextViewBtn.setOnClickListener((v)-> deleteFoodFromFirebase());
 
 
-
+        Button recipesButton = findViewById(R.id.showRecipeBtn);
+        if(!isEditMode){
+            recipesButton.setVisibility(View.INVISIBLE);
+        }
+        recipesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FoodDetailsActivity.this, RecipeActivity.class);
+                i.putExtra("search",foodName);
+                startActivity(i);
+            }
+        });
     }
 
     //All the private methods Go Here

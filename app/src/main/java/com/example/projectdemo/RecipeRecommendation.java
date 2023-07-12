@@ -95,8 +95,8 @@ public class RecipeRecommendation extends AppCompatActivity {
                             String title = recipeObj.getString("title");
                             //int imageUrl = recipeObj.getInt("image");
                             //String sourceUrl = recipeObj.getString("sourceUrl");
-                            Recipe recipe = new Recipe(title);
-                            recipes.add(recipe);
+                          //  Recipe recipe = new Recipe(title);
+                           // recipes.add(recipe);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

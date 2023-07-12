@@ -7,12 +7,14 @@ import android.net.ParseException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectdemo.recipes.RecipeActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -76,6 +78,14 @@ public class FoodAdapter extends FirestoreRecyclerAdapter<FoodItem, FoodAdapter.
             context.startActivity(intent);
         });
 
+        holder.recipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, RecipeActivity.class);
+                i.putExtra("search",model.getFoodName());
+                context.startActivity(i);
+            }
+        });
 
 
     }
@@ -98,9 +108,7 @@ public class FoodAdapter extends FirestoreRecyclerAdapter<FoodItem, FoodAdapter.
         //These are the new textViews added in for the checking of the expiry date
         TextView daysTillExpiredTextView;
 
-        ProgressBar viewProgressBar;
-        private int CurrentProgress = 0;
-
+        Button recipeButton;
 
 
         public FoodViewHolder(@NonNull View itemView) {
@@ -111,7 +119,8 @@ public class FoodAdapter extends FirestoreRecyclerAdapter<FoodItem, FoodAdapter.
             expiryDateTextView = itemView.findViewById(R.id.textExpiryDate);
 
             daysTillExpiredTextView = itemView.findViewById(R.id.daysLeftTillExpired);
-            viewProgressBar = itemView.findViewById(R.id.progressBar);
+            recipeButton = itemView.findViewById(R.id.showRecipesButton);
+
 
 
 

@@ -33,6 +33,16 @@
         android:background="@android:color/holo_green_dark"
         android:text="ADD FOOD"
         android:textColor="@android:color/white"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recipesButton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:background="@color/purple_700"
+        android:text="Show Recipes"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>

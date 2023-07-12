@@ -2,13 +2,15 @@ package com.example.projectdemo;
 //Class to hold the recipe data
 public class Recipe {
     private String title;
-    private int imageUrl;
-    private String sourceUrl;
+    private String imageUrl;
+    private String id;
 
-    public Recipe(String title) {
+    public Recipe() {}
+
+    public Recipe(String title, String imageUrl, String id) {
         this.title = title;
-        //this.imageUrl = imageUrl;
-        //this.sourceUrl = sourceUrl;
+        this.imageUrl = imageUrl;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -19,19 +21,20 @@ public class Recipe {
         this.title = title;
     }
 
-    public int getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(int imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public String getSourceUrl() {
-        return sourceUrl;
+    public String getId() {
+        return id;
     }
 
-    public void setSourceUrl(String sourceUrl) {
-        this.sourceUrl = sourceUrl;
+    public void setId(String id) {
+        this.id = id;
     }
 }
+

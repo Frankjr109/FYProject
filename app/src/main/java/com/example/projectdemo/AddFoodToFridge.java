@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.projectdemo.recipes.RecipeActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.internal.Util;
 
 public class AddFoodToFridge extends AppCompatActivity {
 
@@ -69,6 +72,7 @@ public class AddFoodToFridge extends AppCompatActivity {
 
         setupRecyclerView();
 
+
         /*buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +95,32 @@ public class AddFoodToFridge extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         foodAdapter = new FoodAdapter(options,this);
         recyclerView.setAdapter(foodAdapter);
+
+
+        Button showRecipesButton = findViewById(R.id.recipesButton);
+        showRecipesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodItemArrayList = new ArrayList<>();
+
+                // add all items from the FirestoreRecyclerOptions to the foodItemArrayList
+                foodItemArrayList.addAll(foodAdapter.getSnapshots());
+
+                // start collecting the ingredients with the first item in the arraylist
+                StringBuilder allIngredients = new StringBuilder(foodItemArrayList.get(0).getFoodName());
+
+                // loop over the ingredients and append it to the allIngredients string
+                for(int i = 1; i<foodItemArrayList.size();i++){
+                    allIngredients.append(",").append(foodItemArrayList.get(i).getFoodName());
+                }
+
+                // send allIngrendints (comma separated) to the RecipeActivity search through spoonacular api
+                Intent i = new Intent(AddFoodToFridge.this, RecipeActivity.class);
+                i.putExtra("search", allIngredients.toString());
+                startActivity(i);
+
+            }
+        });
     }
 
     @Override

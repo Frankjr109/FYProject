@@ -52,8 +52,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder>{
             holder.itemView.getContext().startActivity(intent);
         });*/
         holder.titleView.setText(recipes.get(position).getTitle());
-        holder.imageFoodView.setImageResource(recipes.get(position).getImageUrl());
-        holder.UrlView.setText(recipes.get(position).getSourceUrl());
+        //holder.imageFoodView.setImageResource(recipes.get(position).getImageUrl());
+       // holder.UrlView.setText(recipes.get(position).getSourceUrl());
     }
 
     @Override
