@@ -17,10 +17,11 @@ public class Dashboard extends AppCompatActivity {
     private CardView foodCard;
     private CardView profileCard;
     private CardView barCodeScannerCard;
-    private CardView myProfile2Card;
+    private CardView foodReportBtn;
     private CardView myChatGBTCard;
     private CardView myDonationsCard;
     private CardView myPersonalChatCard;
+    private CardView myReviewsCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +80,11 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        myProfile2Card = findViewById(R.id.myProfile2); //Then change it back to what it was supposed to be
-        myProfile2Card.setOnClickListener(new View.OnClickListener() {
+        foodReportBtn = findViewById(R.id.foodReportButton); //Then change it back to what it was supposed to be
+        foodReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Dashboard.this, "Welcome to your Profile!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Dashboard.this, RecipeRecommendation.class);
+                Intent intent = new Intent(Dashboard.this, ReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -107,6 +107,16 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(Dashboard.this, "Welcome to your Donations Page!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Dashboard.this, MyDonationsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myReviewsCard = findViewById(R.id.myReviews);
+        myReviewsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dashboard.this, "Welcome to your Reviews Page!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Dashboard.this, RecipeReviews.class);
                 startActivity(intent);
             }
         });

@@ -80,10 +80,9 @@ public class RecipeRecommendation extends AppCompatActivity {
         for (FoodItem foodItem : foodItems) {
             ingredients += foodItem.getFoodName() + ",";
         }
-        //String url1 = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=ab92577bd7324e7281f7caa3251c11b1&"+ingredients+"&number=10";
         String url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
                 + ingredients
-                + "&number=10&apiKey=ab92577bd7324e7281f7caa3251c11b1";
+                + "&number=10&aa3251c11b1";
 
         // Make the API request using Volley
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,

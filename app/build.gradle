@@ -62,5 +62,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.adevinta.android:leku:10.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
